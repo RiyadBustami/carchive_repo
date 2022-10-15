@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Carchive®</title>
+</head>
+
+<body>
+    <header class="font-monospace border-bottom">
+        <div class="text-center bg-dark">
+            <h1 class="text-light">Carchive®</h1>
+        </div>
+        <div class="row my-2">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="my-2 col justify-content-end">
+                <a href="/admin/dashboard/" class="btn btn-primary btn-sm">Dashboard</a>
+                <a href="/admin/logout/" class="btn btn-danger btn-sm">logout</a>
+            </div>
+        </div>
+    </header>
+    <main class="mx-5 row">
+        <div class="col">
+            <div class="mx-3 text-center">
+                <h3 class="my-4">Add a new brand:</h3>
+                <form action="/admin/process_items/" method="POST" class="my-5">
+                    {% csrf_token %}
+                    <label for="brand" class="form-check-label">Brand Name</label>
+                    <input type="text" name="brand" id="brand" class="form-control">
+                    <input type="hidden" name="source" value="brand">
+                    <input type="submit" value="Add a brand" class="btn btn-primary my-3">
+                </form>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mx-3 text-center">
+                <h3 class="my-4">Add a new model:</h3>
+                <form action="/admin/process_items/" method="POST" class="my-5">
+                    {% csrf_token %}
+                    <label for="brand" class="form-check-label">Add to Brand</label>
+                    <select name="brand" id="brand" class="custom-select">
+                        {% for brand in brands %}
+                        <option value="{{brand.id}}">{{brand.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="model" class="form-check-label">Model Name</label>
+                    <input type="text" name="model" id="model" class="form-control">
+                    <input type="hidden" name="source" value="model">
+                    <input type="submit" value="Add a model" class="btn btn-primary my-3">
+                </form>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mx-3 text-center">
+                <h3 class="my-4">Add a new Document type:</h3>
+                <form action="/admin/process_items/" method="POST" class="my-5">
+                    {% csrf_token %}
+                    <label for="doc_type" class="form-check-label">Document Type</label>
+                    <input type="text" name="doc_type" id="doc_type" class="form-control">
+                    <input type="hidden" name="source" value="doc_type">
+                    <input type="submit" value="Add Type" class="btn btn-primary my-3">
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

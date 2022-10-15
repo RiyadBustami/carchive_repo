@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carchive® Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <header class="font-monospace border-bottom">
+        <div class="text-center bg-dark">
+            <h1 class="text-light">Carchive®</h1>
+        </div>
+        <div class="text-center row align-items-center my-2">
+            <div class="col"></div>
+            <div class="col">Administration</div>
+            <div class="col"><a href="/admin/logout/" class="btn btn-danger btn-sm">Logout</a></div>
+        </div>
+    </header>
+
+    <div class="text-center row align-items-center my-2">
+        <div class="col"></div>
+        <div class="col">
+            <a href="/admin/add_items/">Add Constant Items</a></div>
+        <div class="col">
+            <a href="/admin/add_showroom/">Add a showroom</a>
+        </div>
+    </div>
+
+    <main class="mx-5 row">
+        <div class="m-5 col">
+            <table class="table">
+                <tr class="">
+                    <th>List of showrooms</th>
+                    <th>Action</th>
+                </tr>
+                {% for showroom in showrooms %}
+                <tr class="">
+                    <td>{{showroom.name}}</td>
+                    <td>
+                        <a href="/admin/display_showroom/{{showroom.id}}/">Show</a>
+                        <span>|</span>
+                        <a href="/admin/edit_showroom/{{showroom.id}}/">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add a new car</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+  <header class="font-monospace border-bottom">
+    <div class="text-center bg-dark">
+      <h1 class="text-light">Carchive®</h1>
+    </div>
+    <div class="text-center row align-items-center my-2">
+      <div class="col"></div>
+      <div class="col font-weight-bold">Edit this Car</div>
+      <div class="col">
+        <a href="/dashboard/" class="btn btn-primary btn-sm">Dashboard</a>
+        <a href="/logout/" class="btn btn-danger btn-sm">logout</a>
+      </div>
+      <div>
+        <div class="col font-weight-bold">{{showroom.name}}</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-5 row">
+    <div class="my-5 col">
+      <form action="/update_car/{{car.id}}/" method="POST" class="">
+        {% csrf_token %}
+        <div>
+          <label for="brand" class="form-label">Brand</label>
+          <select id="brand" name="brand" class="form-control" onchange="getModels()">
+            {% for brand in brands %}
+            <option value="{{brand.id}}" 
+            {% if brand.id == car.model.brand.id %}
+            selected 
+            {% endif %}
+            >{{brand.name}}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="my-3">
+          <label for="model" class="form-label">Model</label>
+          <select id="model" name="model" class="form-control">
+            {% for model in models %}
+            <option value="{{model.id}}" 
+            {% if model.id == car.model.id %}
+            selected 
+            {% endif %}
+            >{{model.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="my-3">
+          <label for="date" class="form-label">Production Date</label>
+          <input type="date" value="{{car_prod_date}}" name="prod_date" class="form-control" />
+        </div>
+        <div class="my-3">
+          <label for="color" class="form-label">Color</label>
+          <select id="color" name="color" class="form-control">
+            <option value="red" 
+            {% if car.color == 'red' %}
+            selected 
+            {% endif %}
+            >Red</option>
+            <option value="black" 
+            {% if car.color == 'black' %}
+            selected
+            {% endif %}
+            >Black</option>
+            <option value="white" 
+            {% if car.color == 'red' %}
+            selected 
+            {% endif %}
+            >White</option>
+            <option value="darkblue" 
+            {% if car.color == 'darkblue' %}
+            selected 
+            {% endif %}
+            >DarkBlue</option>
+            <option value="purple" 
+            {% if car.color == 'purple' %}
+            selected 
+            {% endif %}
+            >Purple</option>
+            <option value="green" 
+            {% if car.color == 'green' %}
+            selected 
+            {% endif %}
+            >Green</option>
+          </select>
+        </div>
+        <div class="my-3">
+          <label for="vin" class="form-label">VIN</label>
+          <input type="text" name="vin" value="{{car.vin}}" class="form-control" />
+        </div>
+        <div class="my-3">
+          <button type="submit" class="btn btn-primary my-2">Update</button>
+        </div>
+      </form>
+    </div>
+    <div class="col"></div>
+  </main>
+
+
+  <div class="text-center row align-items-center my-2">
+    <div class="col"></div>
+    <div class="col font-weight-bold"></div>
+    <div class="col">
+      <a href="/show_car_details" class="btn btn-info btn-sm">Go to show</a>
+
+    </div>
+  </div>
+  <script>
+    // getModels()
+    function getModels(){
+      brandSelect=document.getElementById('brand')
+    $.ajax(
+    {
+        type:"GET",
+        url: "/get_models/",
+        data:{
+              id:brandSelect.value
+        },
+        success: function( response ) 
+        {
+            console.log(response)
+            models=response['data']
+            modelSelect=document.getElementById('model')
+            modelSelect.innerHTML=''
+            for(i=0;i<models.length;i++){
+            $('#model').append("<option value="+models[i][0]+">"+models[i][1]+"</option>")
+            }
+        }
+    });
+    }
+    
+
+  </script>
+
+</body>
+
+</html>

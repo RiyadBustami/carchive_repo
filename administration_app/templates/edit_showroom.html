@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <title>Carchive® Admin</title>
+</head>
+
+<body>
+  <header class="font-monospace border-bottom">
+    <div class="text-center bg-dark">
+      <h1 class="text-light">Carchive®</h1>
+    </div>
+    <div class="row my-2">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="my-2 col justify-content-end">
+        <a href="/admin/dashboard/" class="btn btn-primary btn-sm">Dashboard</a>
+        <a href="/admin/logout/" class="btn btn-danger btn-sm">logout</a>
+      </div>
+    </div>
+  </header>
+  <main class="mx-5 row">
+    <div class="my-5 col">
+      <form action="/admin/update_showroom/{{this_showroom.id}}/" method="POST" class="d-inline">
+        {% csrf_token %}
+        <div>
+          <label class="form-label">Name</label>
+          <input type="text" name="name" value="{{this_showroom.name}}" class="form-control" />
+        </div>
+        <div class="my-3">
+          <label class="form-label">Email</label>
+          <input type="text" name="email" value="{{this_showroom.email}}" class="form-control" />
+        </div>
+        <div class="my-3">
+          <label class="form-label">New Password</label>
+          <input type="password" name="password" class="form-control" />
+        </div>
+        <div class="my-3">
+          <label class="form-label">license number</label>
+          <input type="text" name="license_number" value="{{this_showroom.license_number}}" class="form-control" />
+        </div>
+        <div class="my-3 d-inline">
+          <label class="form-label">Payment</label>
+          <select name="payment_method">
+            <option value="not paid">not paid</option>
+            <option value="cash">cash</option>
+            <option value="cheque">cheque</option>
+          </select>
+          <div class="my-5 col d-inline">
+            <button class="btn btn-primary btn-lg my-2 d-inline mx-2">Edit</button>
+          </div>
+        </div>
+      </form>
+      <div class="d-inline">
+        <a href="/admin/delete_showroom/{{this_showroom.id}}/" class="btn btn-danger btn-sm d-inline">Delete</a>
+      </div>
+    </div>
+    <div class="col"></div>
+  </main>
+</body>
+
+</html>

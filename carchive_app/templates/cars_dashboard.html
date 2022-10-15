@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Carchive®</title>
+</head>
+
+<body>
+    <header class="font-monospace border-bottom">
+        <div class="text-center bg-dark">
+            <h1 class="text-light">Carchive®</h1>
+        </div>
+        <div class="text-center row">
+            <div class="col"></div>
+            <p class="col">You'll never forget a car</p>
+            <div class="col justify-content-around ">
+                <a href="/change_password/" class="btn btn-danger btn-sm">Change Password</a>
+                <a href="/logout/" class="btn btn-danger btn-sm">logout</a>
+            </div>
+            <div>
+                <div class="col font-weight-bold">{{showroom.name}}</div>
+            </div>
+        </div>
+    </header>
+    <main class="m-5">
+        <div class="text-end"><a href="/add_new_car/" class="btn btn-dark">Add a new car</a></div>
+        <div>
+            <label for="vin_search" class="form-label">Search (by VIN)</label>
+            <input type="search" name="vin_search" id="vin_search" class="form-control" style="text-transform:uppercase"
+                maxlength="17" oninput="search()">
+        </div>
+        <div class="my-5">
+            <table class="table table-bordered" id="search_results">
+                <tr>
+                    <th class="table-dark">ID</th>
+                    <th class="table-dark">VIN</th>
+                    <th class="table-dark">Model</th>
+                    <th class="table-dark">Actions</th>
+                </tr>
+                {% for car in cars %}
+                <tr>
+                    <td>{{ car.id }}</td>
+                    <td>{{ car.vin}}</td>
+                    <td>{{ car.model.brand.name}} {{ car.model.name }}</td>
+                    <td><a href="/show_car/{{ car.id }}/">show</a> | <a href="/edit_car/{{ car.id }}/">edit</a> | <a
+                            href="/delete_car/{{ car.id }}/">delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script>
+        function search(){
+            searchKey=document.getElementById('vin_search').value.toUpperCase()
+            $.ajax(
+                {
+                    type:"GET",
+                    url: "/find_by_vin/",
+                    data:{
+                        key:searchKey
+                    },
+                    success: function( response ) 
+                    {
+                        var results=response['results']
+                        console.log(response['results'])
+                        var table_of_content=document.getElementById('search_results')
+                        console.log(table_of_content)
+                        table_of_content.innerHTML=''
+                        table_of_content.innerHTML+=('<tr><th class="table-dark">ID</th><th class="table-dark">VIN</th><th class="table-dark">Model</th><th class="table-dark">Actions</th></tr>')
+                        for(i=0;i<results.length;i++){
+                            table_of_content.innerHTML+=(
+                        '<tr><td>'+results[i]['id']+'</td><td>'+results[i]['vin']+'</td><td>'+results[i]['model']+'</td><td><a href="/show_car/'+results[i]['id']+'/">show</a> | <a href="/edit_car/'+results[i]['id']+'/">edit</a> | <a href="/delete_car/'+results[i]['id']+'/">delete</a></td></tr>')
+                        }
+                        
+                        // '<tr><td>'+results[i]['id']+'</td><td>'+results[i]['vin']+'</td><td>'+results[i]['model']+'</td><td><a href="/show_car/'+results[i]['id']+'/">show</a> | <a href="/edit_car/'+results[i]['id']+'/">edit</a> | <a href="/delete_car/'+results[i]['id']+'/">delete</a></td></tr>
+                    }
+                });
+            }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,10 @@
+__init__.py
+__pycache__
+__pycache__/
+migrations
+db.sqlite3
+media
+.vscode
+.vscode/
+env/
+venv/

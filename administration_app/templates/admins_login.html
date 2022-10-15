@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Carchive® Admin</title>
+</head>
+
+<body>
+    <header class="font-monospace border-bottom">
+        <div class="text-center bg-dark">
+            <h1 class="text-light">Carchive®</h1>
+        </div>
+        <div class="text-center">
+            <p class="">Administration</p>
+        </div>
+    </header>
+    <main class="row">
+        <div class="col"></div>
+        <div class="mx-5 my-3 col">
+            <form action="login/" method="POST">
+                {% csrf_token %}
+                <div class="my-2">
+                    <label for="email" class="form-label">Email*</label>
+                    <input type="email" name="email" id="email" class="form-control">
+                </div>
+                <div class="my-2">
+                    <label for="password" class="form-label">Password*</label>
+                    <input type="password" name="password" id="password" class="form-control">
+                </div>
+                <input type="submit" value="Login" class="btn btn-outline-dark my-3">
+            </form>
+        </div>
+        <div class="col"></div>
+    </main>
+
+
+</body>
+
+</html>
